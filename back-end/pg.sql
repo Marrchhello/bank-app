@@ -13,7 +13,7 @@ REVOKE ALL PRIVILEGES ON UserAccountView FROM user2;
 
 
 
--- Create the accounts table
+
 CREATE TABLE accounts (
     account_id SERIAL PRIMARY KEY,
     customer_name VARCHAR(100) NOT NULL,
@@ -22,7 +22,6 @@ CREATE TABLE accounts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create the transactions table
 CREATE TABLE transactions (
     transaction_id SERIAL PRIMARY KEY,
     account_id INTEGER NOT NULL REFERENCES accounts(account_id) ON DELETE CASCADE,
@@ -31,7 +30,6 @@ CREATE TABLE transactions (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create the users table
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
@@ -40,7 +38,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create the balance logs table
 CREATE TABLE balance_logs (
     log_id SERIAL PRIMARY KEY,
     account_id INTEGER NOT NULL REFERENCES accounts(account_id) ON DELETE CASCADE,
@@ -49,24 +46,20 @@ CREATE TABLE balance_logs (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert sample users
 INSERT INTO users (username, password, role) VALUES
 ('admin', 'hashed_password_here', 'root'),
 ('user1', 'hashed_password_here', 'user'),
 ('user2', 'hashed_password_here', 'user');
 
--- Insert sample accounts
 INSERT INTO accounts (customer_name, email, balance) VALUES
 ('John Doe', 'john@example.com', 1000.00),
 ('Jane Smith', 'jane@example.com', 1500.50);
 
--- Insert sample transactions
 INSERT INTO transactions (account_id, amount, transaction_type) VALUES
 (1, 500.00, 'deposit'),
 (1, 200.00, 'withdrawal'),
 (2, 1000.00, 'deposit');
 
--- Insert balance log records
 INSERT INTO balance_logs (account_id, old_balance, new_balance) VALUES
 (1, 1000.00, 1500.00),
 (1, 1500.00, 1300.00),
@@ -75,17 +68,14 @@ INSERT INTO balance_logs (account_id, old_balance, new_balance) VALUES
 
 
 
--- View balance logs ordered by the most recent changes
 SELECT log_id, account_id, old_balance, new_balance, timestamp
 FROM balance_logs
 ORDER BY timestamp DESC;
 
 
--- Create a test user with the role 'user'
 INSERT INTO users (username, password, role) VALUES
 ('test_user', 'hashed_password_here', 'user');
 
--- Insert an account for test_user
 INSERT INTO accounts (customer_name, email, balance) 
 VALUES ('Test User', 'test_user@example.com', 1000.00);
 
@@ -149,7 +139,7 @@ RETURNS TABLE (
     log_timestamp TIMESTAMP
 ) AS $$
 BEGIN
-    -- Root user sees all records (both deposit and withdrawal)
+   
     IF EXISTS (SELECT 1 FROM users WHERE username = current_user AND role = 'root') THEN
         RETURN QUERY
         SELECT a.account_id, a.customer_name, a.email, a.balance, a.created_at,
@@ -159,7 +149,7 @@ BEGIN
         LEFT JOIN transactions t ON a.account_id = t.account_id
         LEFT JOIN balance_logs b ON a.account_id = b.account_id;
     ELSE
-        -- Regular users (like test_user) see all deposit transactions, but not withdrawals
+        
         RETURN QUERY
         SELECT a.account_id, a.customer_name, a.email, a.balance, a.created_at,
                t.transaction_id, t.amount, t.transaction_type, t.timestamp AS transaction_timestamp,
@@ -172,9 +162,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Example of using the function for the current user (test role-based data access)
+
 SELECT * FROM get_account_balance();
 
--- Example of using the view for root users (shows both deposits and withdrawals)
+
 SELECT * FROM account_balance_view;
 
