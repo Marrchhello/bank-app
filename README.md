@@ -43,7 +43,6 @@ Python 3.x: Install Python from python.org.
 
 PostgreSQL: Install PostgreSQL from postgresql.org.
 
-Node.js (Optional): Required if you want to use a live server for the frontend.
 
 Backend Setup
 Clone the repository:
@@ -87,12 +86,6 @@ Copy
 cd frontend
 Serve the frontend using a live server:
 
-If you have Node.js installed, you can use http-server:
-
-bash
-Copy
-npx http-server
-Alternatively, open index.html directly in your browser.
 
 The frontend will be available at http://127.0.0.1:5500 (or another port depending on your setup).
 
