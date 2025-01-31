@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = 'http://127.0.0.1:5000'; // Base URL for all requests
+    const BASE_URL = 'http://127.0.0.1:5000'; 
     const loginSection = document.getElementById('login-section');
     const registerSection = document.getElementById('register-section');
     const accountSection = document.getElementById('account-section');
@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             if (response.ok) {
                 token = data.access_token;
-                currentUser = await fetchCurrentUser(token); // Fetch current user details
+                currentUser = await fetchCurrentUser(token); 
                 loginSection.style.display = 'none';
                 accountSection.style.display = 'block';
-                toggleRootFeatures(currentUser.role === 'root'); // Show/hide root features
+                toggleRootFeatures(currentUser.role === 'root'); 
             } else {
                 alert(data.error || 'Login failed');
             }
