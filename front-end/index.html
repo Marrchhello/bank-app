@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="login-section">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="register-section" style="display: none;">
+            <h2>Register</h2>
+            <form id="register-form">
+                <label for="reg-username">Username:</label>
+                <input type="text" id="reg-username" name="username" required>
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" name="password" required>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+        </div>
+
+        <!-- Account Management Section -->
+        <div id="account-section" style="display: none;">
+            <h2>Account Management</h2>
+            <button id="create-account-btn">Create Account</button>
+            <button id="view-account-btn">View Account</button>
+            <button id="update-account-btn">Update Account</button>
+            <button id="delete-account-btn">Delete Account</button>
+            <button id="create-transaction-btn">Create Transaction</button>
+            <button id="logout-btn">Logout</button>
+
+            <!-- Create Account Form -->
+            <div id="create-account-form" style="display: none;">
+                <h3>Create Account</h3>
+                <form id="create-account-form-inner">
+                    <label for="customer-name">Customer Name:</label>
+                    <input type="text" id="customer-name" name="customer_name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="initial-balance">Initial Balance:</label>
+                    <input type="number" id="initial-balance" name="balance" step="0.01" required>
+                    <button type="submit">Create</button>
+                </form>
+            </div>
+
+            <!-- View Account Details -->
+            <div id="view-account-details" style="display: none;">
+                <h3>Account Details</h3>
+                <label for="account-id">Account ID:</label>
+                <input type="number" id="account-id" name="account_id" required>
+                <button id="fetch-account-btn">Fetch Account</button>
+                <div id="account-info"></div>
+            </div>
+
+            <!-- Update Account Form -->
+            <div id="update-account-form" style="display: none;">
+                <h3>Update Account</h3>
+                <form id="update-account-form-inner">
+                    <label for="update-account-id">Account ID:</label>
+                    <input type="number" id="update-account-id" name="account_id" required>
+                    <label for="update-customer-name">Customer Name:</label>
+                    <input type="text" id="update-customer-name" name="customer_name">
+                    <label for="update-email">Email:</label>
+                    <input type="email" id="update-email" name="email">
+                    <label for="update-balance">Balance:</label>
+                    <input type="number" id="update-balance" name="balance" step="0.01">
+                    <button type="submit">Update</button>
+                </form>
+            </div>
+
+            <!-- Delete Account Form -->
+            <div id="delete-account-form" style="display: none;">
+                <h3>Delete Account</h3>
+                <form id="delete-account-form-inner">
+                    <label for="delete-account-id">Account ID:</label>
+                    <input type="number" id="delete-account-id" name="account_id" required>
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+
+            <!-- Create Transaction Form -->
+            <div id="create-transaction-form" style="display: none;">
+                <h3>Create Transaction</h3>
+                <form id="create-transaction-form-inner">
+                    <label for="transaction-account-id">Account ID:</label>
+                    <input type="number" id="transaction-account-id" name="account_id" required>
+                    <label for="transaction-amount">Amount:</label>
+                    <input type="number" id="transaction-amount" name="amount" step="0.01" required>
+                    <label for="transaction-type">Transaction Type:</label>
+                    <select id="transaction-type" name="transaction_type" required>
+                        <option value="deposit">Deposit</option>
+                        <option value="withdrawal">Withdrawal</option>
+                    </select>
+                    <button type="submit">Create Transaction</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
